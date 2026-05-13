@@ -16,9 +16,9 @@ export default function PaginaHarta() {
       <div className="absolute top-4 right-4 z-[1000]">
         <Link
           href="/"
-          className="bg-white text-blue-600 font-extrabold py-3 px-6 rounded-full shadow-lg border-2 border-blue-600 hover:bg-blue-50 transition transform hover:scale-105 active:scale-95 flex items-center gap-2"
+          className="flex items-center gap-2 rounded-full border border-white/15 bg-zinc-950/90 px-5 py-2.5 text-sm font-semibold text-zinc-100 shadow-lg shadow-black/40 backdrop-blur-md transition hover:border-emerald-400/40 hover:bg-zinc-900/95 active:scale-[0.98]"
         >
-          ⬅ Acasă
+          ← Acasă
         </Link>
       </div>
 

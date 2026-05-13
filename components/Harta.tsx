@@ -75,8 +75,8 @@ function RobotLocatie() {
     // Înregistrăm ascultătorul
     harta.on("locationfound", onLocationFound);
 
-    // FUNCȚIA DE CURĂȚENIE: Este obligatoriu să oprim urmărirea când 
-1.      // ieșim de pe pagină, altfel telefonul continuă să consume baterie în fundal.
+    // FUNCȚIA DE CURĂȚENIE: Este obligatoriu să oprim urmărirea când
+    // ieșim de pe pagină, altfel telefonul continuă să consume baterie în fundal.
     return () => {
       harta.stopLocate();
       harta.off("locationfound", onLocationFound);
