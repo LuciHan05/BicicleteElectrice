@@ -6,11 +6,22 @@ import { getStatieById } from "@/lib/stations";
 
 type PostBody = {
   target?: string;
-  stationId?: number | null;
+  stationId?: unknown;
   bikeIdentifier?: string | null;
   category?: string;
   description?: string;
 };
+
+function parseOptionalStationId(raw: unknown): number | null {
+  if (raw === null || raw === undefined) return null;
+  if (typeof raw === "string" && raw.trim() === "") return null;
+  const n =
+    typeof raw === "number" && Number.isFinite(raw)
+      ? Math.trunc(raw)
+      : Number.parseInt(String(raw).trim(), 10);
+  if (!Number.isFinite(n) || n < 1) return null;
+  return n;
+}
 
 function normalizeBikeId(raw: unknown): string | null {
   if (raw == null || raw === "") return null;
@@ -39,15 +50,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const stationIdRaw = body.stationId;
-  const stationId =
-    stationIdRaw === null || stationIdRaw === undefined || stationIdRaw === ""
-      ? null
-      : Number(stationIdRaw);
-
-  if (stationId !== null && (!Number.isFinite(stationId) || stationId < 1)) {
-    return NextResponse.json({ error: "ID stație invalid." }, { status: 400 });
-  }
+  const stationId = parseOptionalStationId(body.stationId);
 
   if (target === "station" && stationId === null) {
     return NextResponse.json(
