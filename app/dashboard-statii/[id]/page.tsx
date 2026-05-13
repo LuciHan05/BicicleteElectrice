@@ -154,6 +154,20 @@ export default function DashboardStatieDetailPage() {
           <div>
             <h2 className="text-2xl font-semibold text-white">{data.stationName}</h2>
             <p className="mt-1 text-sm text-zinc-500">Stație #{data.stationId}</p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              <Link
+                href={`/rapoarte?statie=${data.stationId}`}
+                className="rounded-lg border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-xs font-semibold text-amber-100 transition hover:bg-amber-500/20"
+              >
+                Raportează: stație
+              </Link>
+              <Link
+                href={`/rapoarte?statie=${data.stationId}&tip=bicicleta`}
+                className="rounded-lg border border-white/15 bg-white/5 px-3 py-2 text-xs font-medium text-zinc-200 transition hover:bg-white/10"
+              >
+                Raportează: bicicletă (aici)
+              </Link>
+            </div>
           </div>
 
           <div className="rounded-2xl border border-white/10 bg-zinc-900/50 p-6">

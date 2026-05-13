@@ -65,6 +65,12 @@ export default function Home() {
             >
               Deschide harta
             </Link>
+            <Link
+              href="/rapoarte"
+              className="rounded-full border border-amber-500/40 bg-amber-500/15 px-4 py-2 text-sm font-semibold text-amber-100 transition hover:border-amber-400/60 hover:bg-amber-500/25"
+            >
+              Raport defecțiune
+            </Link>
           </nav>
         </div>
       </header>

@@ -29,7 +29,11 @@ export default function DashboardStatiiPage() {
     <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
       <p className="max-w-2xl text-sm leading-relaxed text-zinc-400">
         Selectează o stație pentru a vedea dacă există o bicicletă conectată la încărcare și
-        parametrii simulați (tensiune, curent, putere, progres).
+        parametrii simulați (tensiune, curent, putere, progres). Ai o problemă?{" "}
+        <Link href="/rapoarte" className="font-medium text-amber-200/90 underline-offset-2 hover:underline">
+          Raportează o defecțiune
+        </Link>
+        .
       </p>
 
       {error && (

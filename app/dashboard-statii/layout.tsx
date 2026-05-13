@@ -25,6 +25,12 @@ export default function DashboardStatiiLayout({ children }: { children: ReactNod
             >
               Hartă
             </Link>
+            <Link
+              href="/rapoarte"
+              className="rounded-lg border border-amber-500/35 bg-amber-500/10 px-3 py-2 text-sm font-medium text-amber-200 transition hover:bg-amber-500/20"
+            >
+              Raport defecțiune
+            </Link>
           </nav>
         </div>
       </header>

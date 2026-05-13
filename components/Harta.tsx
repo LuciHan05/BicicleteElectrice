@@ -101,6 +101,12 @@ function StationMarker({ statie }: { statie: Statie }) {
           >
             Toate stațiile
           </Link>
+          <Link
+            href={`/rapoarte?statie=${statie.id}`}
+            className="mt-2 block text-center text-xs font-semibold text-amber-800 underline-offset-2 hover:underline"
+          >
+            Raportează defecțiune
+          </Link>
         </div>
       </Popup>
     </Marker>
