@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
-import { buildMockChargingStatus } from "@/lib/charging-mock";
+import { buildMockChargingDetail } from "@/lib/charging-mock";
 
 type RouteContext = { params: Promise<{ id: string }> };
 
 /**
  * GET /api/stations/:id/charging
- * Returnează telemetrie mock pentru o bicicletă în curs de încărcare la stația dată.
+ * Detaliu încărcare mock: `connected` false → fără telemetrie; true → valori simulate.
  */
 export async function GET(_request: Request, context: RouteContext) {
   const { id } = await context.params;
@@ -14,7 +14,7 @@ export async function GET(_request: Request, context: RouteContext) {
     return NextResponse.json({ error: "ID stație invalid." }, { status: 400 });
   }
 
-  const payload = buildMockChargingStatus(stationId);
+  const payload = buildMockChargingDetail(stationId);
   if (!payload) {
     return NextResponse.json({ error: "Stația nu a fost găsită." }, { status: 404 });
   }

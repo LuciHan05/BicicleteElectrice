@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { STATII_BICICLETE } from "@/lib/stations";
 
 const features = [
   {
@@ -51,7 +52,13 @@ export default function Home() {
               <p className="text-xs text-zinc-500">Stații · Hartă · Timp real</p>
             </div>
           </div>
-          <nav className="flex items-center gap-2">
+          <nav className="flex flex-wrap items-center justify-end gap-2">
+            <Link
+              href="/dashboard-statii"
+              className="rounded-full border border-sky-400/35 bg-sky-500/15 px-4 py-2 text-sm font-semibold text-sky-200 transition hover:border-sky-400/55 hover:bg-sky-500/25"
+            >
+              Dashboard încărcări
+            </Link>
             <Link
               href="/harta"
               className="rounded-full border border-emerald-400/30 bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-300 transition hover:border-emerald-400/50 hover:bg-emerald-500/20"
@@ -97,6 +104,12 @@ export default function Home() {
                   →
                 </span>
               </Link>
+              <Link
+                href="/dashboard-statii"
+                className="inline-flex items-center justify-center rounded-xl border border-white/15 bg-white/5 px-6 py-3.5 text-base font-semibold text-white transition hover:bg-white/10 active:scale-[0.98]"
+              >
+                Dashboard încărcări
+              </Link>
               <p className="text-sm text-zinc-500">
                 Fără cont · Date demo pe hartă · Permisiune locație opțională
               </p>
@@ -107,7 +120,9 @@ export default function Home() {
                 <dt className="text-xs font-medium uppercase tracking-wide text-zinc-500">
                   Stații demo
                 </dt>
-                <dd className="mt-1 text-2xl font-semibold tabular-nums text-white">3</dd>
+                <dd className="mt-1 text-2xl font-semibold tabular-nums text-white">
+                  {STATII_BICICLETE.length}
+                </dd>
               </div>
               <div>
                 <dt className="text-xs font-medium uppercase tracking-wide text-zinc-500">

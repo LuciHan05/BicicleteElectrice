@@ -1,7 +1,6 @@
-import type { ChargingStatusResponse } from "./charging-types";
-import { getStatieById } from "./stations";
+import type { StationChargingDetailDTO, StationListItemDTO } from "./charging-types";
+import { getStatieById, STATII_BICICLETE } from "./stations";
 
-/** Variere lentă în timp (fără aleator pur) — simulează fluctuații de încărcare. */
 function wave(seed: number, t: number): number {
   return Math.sin(seed * 1.7 + t * 0.0004) * 0.5 + 0.5;
 }
@@ -14,13 +13,40 @@ function round1(n: number): number {
   return Math.round(n * 10) / 10;
 }
 
+export function listStationChargingSummaries(): StationListItemDTO[] {
+  return STATII_BICICLETE.map((s) => ({
+    id: s.id,
+    nume: s.nume,
+    chargingConnected: s.chargingConnected,
+    biciclete: s.biciclete,
+    locuriGoale: s.locuriGoale,
+  }));
+}
+
 /**
- * Generează telemetrie mock pentru o stație.
- * Valorile depind ușor de `stationId` și de timpul serverului ca să pară „live”.
+ * Telemetrie mock pentru o stație.
+ * Dacă stația nu are `chargingConnected`, toți parametrii de încărcare sunt null.
  */
-export function buildMockChargingStatus(stationId: number): ChargingStatusResponse | null {
+export function buildMockChargingDetail(stationId: number): StationChargingDetailDTO | null {
   const statie = getStatieById(stationId);
   if (!statie) return null;
+
+  const updatedAt = new Date().toISOString();
+
+  if (!statie.chargingConnected) {
+    return {
+      stationId,
+      stationName: statie.nume,
+      connected: false,
+      bikeId: null,
+      batteryPercent: null,
+      etaMinutesToFull: null,
+      powerWatts: null,
+      voltageVolts: null,
+      currentAmps: null,
+      updatedAt,
+    };
+  }
 
   const t = Date.now();
   const w1 = wave(stationId, t);
@@ -39,18 +65,16 @@ export function buildMockChargingStatus(stationId: number): ChargingStatusRespon
   const currentAmps = round1(2.1 + w2 * 1.6);
   const powerWatts = Math.round(voltageVolts * currentAmps);
 
-  const batteryTempCelsius = round1(24 + w1 * 9 + stationId * 0.4);
-
   return {
     stationId,
     stationName: statie.nume,
+    connected: true,
     bikeId: `CBE-${stationId}-${(1000 + stationId * 37).toString(36).toUpperCase()}`,
     batteryPercent,
     etaMinutesToFull,
     powerWatts,
     voltageVolts,
     currentAmps,
-    batteryTempCelsius,
-    updatedAt: new Date().toISOString(),
+    updatedAt,
   };
 }

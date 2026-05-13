@@ -1,0 +1,87 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import type { StationListItemDTO } from "@/lib/charging-types";
+
+export default function DashboardStatiiPage() {
+  const [stations, setStations] = useState<StationListItemDTO[] | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch("/api/stations", { cache: "no-store" });
+        if (!res.ok) throw new Error(`Eroare ${res.status}`);
+        const body = (await res.json()) as { stations: StationListItemDTO[] };
+        if (!cancelled) setStations(body.stations);
+      } catch {
+        if (!cancelled) setError("Nu s-a putut încărca lista de stații.");
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  return (
+    <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+      <p className="max-w-2xl text-sm leading-relaxed text-zinc-400">
+        Selectează o stație pentru a vedea dacă există o bicicletă conectată la încărcare și
+        parametrii simulați (tensiune, curent, putere, progres).
+      </p>
+
+      {error && (
+        <div className="mt-6 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-200">
+          {error}
+        </div>
+      )}
+
+      {!error && stations === null && (
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div
+              key={i}
+              className="h-40 animate-pulse rounded-2xl border border-white/5 bg-white/[0.04]"
+            />
+          ))}
+        </div>
+      )}
+
+      {stations && (
+        <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {stations.map((s) => (
+            <li key={s.id}>
+              <Link
+                href={`/dashboard-statii/${s.id}`}
+                className="group flex h-full flex-col rounded-2xl border border-white/10 bg-zinc-900/40 p-5 shadow-lg shadow-black/20 transition hover:border-emerald-500/35 hover:bg-zinc-900/70"
+              >
+                <div className="flex items-start justify-between gap-2">
+                  <h2 className="text-base font-semibold text-white group-hover:text-emerald-100">
+                    {s.nume}
+                  </h2>
+                  <span
+                    className={
+                      s.chargingConnected
+                        ? "shrink-0 rounded-full bg-emerald-500/20 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-emerald-300"
+                        : "shrink-0 rounded-full bg-zinc-600/40 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-zinc-400"
+                    }
+                  >
+                    {s.chargingConnected ? "Conectat" : "Deconectat"}
+                  </span>
+                </div>
+                <p className="mt-3 text-sm text-zinc-500">
+                  🚲 {s.biciclete} disponibile · 🅿️ {s.locuriGoale} locuri libere
+                </p>
+                <span className="mt-4 text-sm font-medium text-emerald-400/90">
+                  Vezi detalii →
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
+    </main>
+  );
+}

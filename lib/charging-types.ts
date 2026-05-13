@@ -1,18 +1,23 @@
-/** Răspuns API pentru telemetria încărcării unei biciclete la stație (mock). */
-export type ChargingStatusResponse = {
+/** Element din lista de stații (mock API). */
+export type StationListItemDTO = {
+  id: number;
+  nume: string;
+  /** Bicicletă conectată la dock-ul de încărcare (simulare). */
+  chargingConnected: boolean;
+  biciclete: number;
+  locuriGoale: number;
+};
+
+/** Detaliu telemetrie încărcare pentru o stație (mock API). */
+export type StationChargingDetailDTO = {
   stationId: number;
   stationName: string;
-  bikeId: string;
-  batteryPercent: number;
-  /** Minute până la încărcare completă estimată */
-  etaMinutesToFull: number;
-  /** Putere instantanee (W) */
-  powerWatts: number;
-  /** Tensiune la intrarea încărcătorului (V) */
-  voltageVolts: number;
-  /** Curent de încărcare (A) */
-  currentAmps: number;
-  /** Temperatură estimată acumulator (°C) */
-  batteryTempCelsius: number;
+  connected: boolean;
+  bikeId: string | null;
+  batteryPercent: number | null;
+  etaMinutesToFull: number | null;
+  powerWatts: number | null;
+  voltageVolts: number | null;
+  currentAmps: number | null;
   updatedAt: string;
 };

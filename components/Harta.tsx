@@ -1,14 +1,13 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import type { Statie } from "@/lib/stations";
 import { STATII_BICICLETE } from "@/lib/stations";
-import ChargingStatusModal from "@/components/ChargingStatusModal";
 
-// REPARARE ICONIȚE STANDARD (pentru stațiile de biciclete)
 const DefaultIcon = L.icon({
   iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
   iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
@@ -74,16 +73,11 @@ function RobotLocatie() {
   );
 }
 
-type StationMarkerProps = {
-  statie: Statie;
-  onOpenCharging: (statie: Statie) => void;
-};
-
-function StationMarker({ statie, onOpenCharging }: StationMarkerProps) {
+function StationMarker({ statie }: { statie: Statie }) {
   return (
     <Marker position={statie.coordonate}>
       <Popup>
-        <div className="min-w-[220px] max-w-[260px] font-sans text-sm text-zinc-900">
+        <div className="min-w-[220px] max-w-[280px] font-sans text-sm text-zinc-900">
           <p className="text-base font-semibold text-zinc-950">{statie.nume}</p>
           <p className="mt-2 text-zinc-700">
             🚲 Disponibile: <strong>{statie.biciclete}</strong>
@@ -91,17 +85,22 @@ function StationMarker({ statie, onOpenCharging }: StationMarkerProps) {
           <p className="text-zinc-700">
             🅿️ Locuri goale: <strong>{statie.locuriGoale}</strong>
           </p>
-          <p className="mt-2 text-xs leading-snug text-zinc-500">
-            Telemetrie încărcare simulată de la API (demo).
+          <p className="mt-2 text-xs text-zinc-500">
+            Status încărcare:{" "}
+            <strong>{statie.chargingConnected ? "conectat (demo)" : "deconectat"}</strong>
           </p>
-          <button
-            type="button"
-            title="Conectează-te la bicicletă"
-            className="mt-3 w-full rounded-lg bg-gradient-to-r from-emerald-600 to-teal-600 px-3 py-2.5 text-center text-xs font-semibold text-white shadow-sm transition hover:brightness-110 active:scale-[0.98]"
-            onClick={() => onOpenCharging(statie)}
+          <Link
+            href={`/dashboard-statii/${statie.id}`}
+            className="mt-3 flex w-full items-center justify-center rounded-lg bg-gradient-to-r from-emerald-600 to-teal-600 px-3 py-2.5 text-center text-xs font-semibold text-white shadow-sm transition hover:brightness-110"
           >
-            Vezi status încărcare
-          </button>
+            Deschide în dashboard
+          </Link>
+          <Link
+            href="/dashboard-statii"
+            className="mt-2 block text-center text-xs font-medium text-emerald-700 underline-offset-2 hover:underline"
+          >
+            Toate stațiile
+          </Link>
         </div>
       </Popup>
     </Marker>
@@ -109,40 +108,22 @@ function StationMarker({ statie, onOpenCharging }: StationMarkerProps) {
 }
 
 export default function Harta() {
-  const [chargingModal, setChargingModal] = useState<{
-    id: number;
-    nume: string;
-  } | null>(null);
-
   return (
-    <>
-      <MapContainer
-        center={[46.7712, 23.5966]}
-        zoom={13}
-        style={{ height: "100vh", width: "100%" }}
-      >
-        <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution="&copy; OpenStreetMap contributors"
-        />
-
-        <RobotLocatie />
-
-        {STATII_BICICLETE.map((statie) => (
-          <StationMarker
-            key={statie.id}
-            statie={statie}
-            onOpenCharging={(s) => setChargingModal({ id: s.id, nume: s.nume })}
-          />
-        ))}
-      </MapContainer>
-
-      <ChargingStatusModal
-        open={chargingModal !== null}
-        stationId={chargingModal?.id ?? null}
-        stationName={chargingModal?.nume ?? ""}
-        onClose={() => setChargingModal(null)}
+    <MapContainer
+      center={[46.7712, 23.5966]}
+      zoom={13}
+      style={{ height: "100vh", width: "100%" }}
+    >
+      <TileLayer
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution="&copy; OpenStreetMap contributors"
       />
-    </>
+
+      <RobotLocatie />
+
+      {STATII_BICICLETE.map((statie) => (
+        <StationMarker key={statie.id} statie={statie} />
+      ))}
+    </MapContainer>
   );
 }
