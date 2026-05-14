@@ -25,3 +25,10 @@ body {
   color: var(--foreground);
   font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
 }
+
+/* Leaflet: divIcon fără chenarul implicit */
+.leaflet-div-icon.custom-user-icon,
+.leaflet-div-icon.custom-station-bike-icon {
+  background: transparent !important;
+  border: none !important;
+}

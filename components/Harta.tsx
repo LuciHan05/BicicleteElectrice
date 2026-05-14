@@ -8,16 +8,26 @@ import L from "leaflet";
 import type { Statie } from "@/lib/stations";
 import { STATII_BICICLETE } from "@/lib/stations";
 
-const DefaultIcon = L.icon({
-  iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
-  iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
-  shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41],
+const StationBicycleIconHTML = `
+  <svg width="40" height="52" viewBox="0 0 40 52" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <ellipse cx="20" cy="49" rx="9" ry="2.5" fill="rgba(0,0,0,0.22)"/>
+    <path d="M20 3C10.6 3 3 10.6 3 20c0 11 17 29 17 29s17-18 17-29C37 10.6 29.4 3 20 3z" fill="#059669" stroke="#ffffff" stroke-width="2"/>
+    <g fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="14" cy="19" r="3.2"/>
+      <circle cx="26" cy="19" r="3.2"/>
+      <path d="M12.5 19h4l2.5-7h5.5l-2 7h3"/>
+      <path d="M19 12l-1.5 7M24.5 12l-2 7"/>
+    </g>
+  </svg>
+`;
+
+const StationBicycleIcon = L.divIcon({
+  html: StationBicycleIconHTML,
+  className: "custom-station-bike-icon",
+  iconSize: [40, 52],
+  iconAnchor: [20, 52],
+  popupAnchor: [0, -48],
 });
-L.Marker.prototype.options.icon = DefaultIcon;
 
 const UserIconHTML = `
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -75,7 +85,7 @@ function RobotLocatie() {
 
 function StationMarker({ statie }: { statie: Statie }) {
   return (
-    <Marker position={statie.coordonate}>
+    <Marker position={statie.coordonate} icon={StationBicycleIcon}>
       <Popup>
         <div className="min-w-[220px] max-w-[280px] font-sans text-sm text-zinc-900">
           <p className="text-base font-semibold text-zinc-950">{statie.nume}</p>
