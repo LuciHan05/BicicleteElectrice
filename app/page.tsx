@@ -55,19 +55,19 @@ export default function Home() {
           <nav className="flex flex-wrap items-center justify-end gap-2">
             <Link
               href="/dashboard-statii"
-              className="rounded-full border border-sky-400/35 bg-sky-500/15 px-4 py-2 text-sm font-semibold text-sky-200 transition hover:border-sky-400/55 hover:bg-sky-500/25"
+              className="min-h-11 rounded-full border border-sky-400/35 bg-sky-500/15 px-4 py-2 text-sm font-semibold text-sky-200 transition hover:border-sky-400/55 hover:bg-sky-500/25"
             >
               Dashboard încărcări
             </Link>
             <Link
               href="/harta"
-              className="rounded-full border border-emerald-400/30 bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-300 transition hover:border-emerald-400/50 hover:bg-emerald-500/20"
+              className="min-h-11 rounded-full border border-emerald-400/30 bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-300 transition hover:border-emerald-400/50 hover:bg-emerald-500/20"
             >
               Deschide harta
             </Link>
             <Link
               href="/rapoarte"
-              className="rounded-full border border-amber-500/40 bg-amber-500/15 px-4 py-2 text-sm font-semibold text-amber-100 transition hover:border-amber-400/60 hover:bg-amber-500/25"
+              className="min-h-11 rounded-full border border-amber-500/40 bg-amber-500/15 px-4 py-2 text-sm font-semibold text-amber-100 transition hover:border-amber-400/60 hover:bg-amber-500/25"
             >
               Raport defecțiune
             </Link>
@@ -97,10 +97,10 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="flex flex-wrap items-center gap-4">
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4">
               <Link
                 href="/harta"
-                className="group inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 px-6 py-3.5 text-base font-semibold text-zinc-950 shadow-lg shadow-emerald-500/25 transition hover:brightness-110 active:scale-[0.98]"
+                className="group inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 px-5 py-3 text-base font-semibold text-zinc-950 shadow-lg shadow-emerald-500/25 transition hover:brightness-110 active:scale-[0.98] sm:px-6 sm:py-3.5"
               >
                 Pornește explorarea
                 <span
@@ -112,7 +112,7 @@ export default function Home() {
               </Link>
               <Link
                 href="/dashboard-statii"
-                className="inline-flex items-center justify-center rounded-xl border border-white/15 bg-white/5 px-6 py-3.5 text-base font-semibold text-white transition hover:bg-white/10 active:scale-[0.98]"
+                className="inline-flex min-h-11 items-center justify-center rounded-xl border border-white/15 bg-white/5 px-5 py-3 text-base font-semibold text-white transition hover:bg-white/10 active:scale-[0.98] sm:px-6 sm:py-3.5"
               >
                 Dashboard încărcări
               </Link>

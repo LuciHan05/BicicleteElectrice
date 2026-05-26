@@ -6,6 +6,8 @@ export type Statie = {
   locuriGoale: number;
   /** Mock: există bicicletă conectată la încărcare la această stație. */
   chargingConnected: boolean;
+  /** Telemetrie reală de la ESP (HTTP ingest), nu simulare. */
+  liveTelemetry?: boolean;
 };
 
 export const STATII_BICICLETE: Statie[] = [
@@ -56,6 +58,15 @@ export const STATII_BICICLETE: Statie[] = [
     biciclete: 2,
     locuriGoale: 8,
     chargingConnected: false,
+  },
+  {
+    id: 7,
+    nume: "Mircea Eliade 45",
+    coordonate: [46.7628, 23.6212],
+    biciclete: 1,
+    locuriGoale: 9,
+    chargingConnected: false,
+    liveTelemetry: true,
   },
 ];
 

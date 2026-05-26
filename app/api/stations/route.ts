@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
-import { listStationChargingSummaries } from "@/lib/charging-mock";
+import { listStationChargingSummariesForApi } from "@/lib/charging-service";
 
 /**
  * GET /api/stations
- * Lista stațiilor cu starea conexiunii la încărcare (mock).
+ * Lista stațiilor cu starea conexiunii la încărcare.
  */
 export async function GET() {
   return NextResponse.json(
-    { stations: listStationChargingSummaries() },
+    { stations: listStationChargingSummariesForApi() },
     {
       headers: { "Cache-Control": "no-store" },
     },
