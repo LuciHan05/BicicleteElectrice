@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { STATII_BICICLETE } from "@/lib/stations";
 
@@ -52,7 +54,7 @@ export default function Home() {
               <p className="text-xs text-zinc-500">Stații · Hartă · Timp real</p>
             </div>
           </div>
-          <nav className="flex flex-wrap items-center justify-end gap-2">
+          <nav className="hidden items-center justify-end gap-2 sm:flex">
             <Link
               href="/dashboard-statii"
               className="min-h-11 rounded-full border border-sky-400/35 bg-sky-500/15 px-4 py-2 text-sm font-semibold text-sky-200 transition hover:border-sky-400/55 hover:bg-sky-500/25"
@@ -72,7 +74,42 @@ export default function Home() {
               Raport defecțiune
             </Link>
           </nav>
+          <button
+            type="button"
+            className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white sm:hidden"
+            aria-label="Meniu"
+            onClick={() => {
+              const menu = document.getElementById('mobile-menu');
+              if (menu) menu.classList.toggle('hidden');
+            }}
+          >
+            <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
         </div>
+        <nav id="mobile-menu" className="hidden border-t border-white/10 bg-zinc-950/95 px-4 py-3 sm:hidden">
+          <div className="flex flex-col gap-2">
+            <Link
+              href="/dashboard-statii"
+              className="min-h-11 rounded-full border border-sky-400/35 bg-sky-500/15 px-4 py-2 text-sm font-semibold text-sky-200 transition hover:border-sky-400/55 hover:bg-sky-500/25 text-center"
+            >
+              Dashboard încărcări
+            </Link>
+            <Link
+              href="/harta"
+              className="min-h-11 rounded-full border border-emerald-400/30 bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-300 transition hover:border-emerald-400/50 hover:bg-emerald-500/20 text-center"
+            >
+              Deschide harta
+            </Link>
+            <Link
+              href="/rapoarte"
+              className="min-h-11 rounded-full border border-amber-500/40 bg-amber-500/15 px-4 py-2 text-sm font-semibold text-amber-100 transition hover:border-amber-400/60 hover:bg-amber-500/25 text-center"
+            >
+              Raport defecțiune
+            </Link>
+          </div>
+        </nav>
       </header>
 
       <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20">

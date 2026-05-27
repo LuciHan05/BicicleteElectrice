@@ -47,6 +47,7 @@ function RaportFormInner() {
   }, []);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     void loadStations();
     void loadRecent();
   }, [loadStations, loadRecent]);
@@ -63,13 +64,6 @@ function RaportFormInner() {
     });
     return () => cancelAnimationFrame(frame);
   }, [searchParams]);
-
-  useEffect(() => {
-    setCategory((c) => {
-      const valid = categories.some((x) => x.value === c);
-      return valid ? c : "";
-    });
-  }, [categories]);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -125,7 +119,10 @@ function RaportFormInner() {
                 type="radio"
                 name="target"
                 checked={target === "station"}
-                onChange={() => setTarget("station")}
+                onChange={() => {
+                  setTarget("station");
+                  setCategory("");
+                }}
                 className="border-zinc-600 text-emerald-500 focus:ring-emerald-500/50"
               />
               Stație de încărcare
@@ -135,7 +132,10 @@ function RaportFormInner() {
                 type="radio"
                 name="target"
                 checked={target === "bike"}
-                onChange={() => setTarget("bike")}
+                onChange={() => {
+                  setTarget("bike");
+                  setCategory("");
+                }}
                 className="border-zinc-600 text-emerald-500 focus:ring-emerald-500/50"
               />
               Bicicletă
