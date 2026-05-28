@@ -15,6 +15,21 @@ function round1(n: number): number {
   return Math.round(n * 10) / 10;
 }
 
+function clamp(n: number, min: number, max: number): number {
+  return Math.min(max, Math.max(min, n));
+}
+
+/**
+ * Conversie simplă calibrare ESP:
+ * - 4.0V => 100%
+ * - 3.0V => 0%
+ * (interval liniar între ele)
+ */
+function batteryPercentFromVoltage(voltageVolts: number): number {
+  const normalized = (voltageVolts - 3.0) / (4.0 - 3.0);
+  return Math.round(clamp(normalized * 100, 0, 100));
+}
+
 export function upsertLiveTelemetry(
   stationId: number,
   input: {
@@ -72,7 +87,9 @@ export function upsertLiveTelemetry(
       : Math.round(voltageVolts * currentAmps);
 
   const batteryPercent =
-    input.batteryPercent != null ? round1(input.batteryPercent) : null;
+    input.batteryPercent != null
+      ? Math.round(clamp(input.batteryPercent, 0, 100))
+      : batteryPercentFromVoltage(input.voltageVolts);
 
   const etaMinutesToFull =
     batteryPercent != null
