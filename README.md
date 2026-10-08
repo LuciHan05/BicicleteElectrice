@@ -10,7 +10,7 @@ Proiectul rezolvă problema monitorizării și gestionării stațiilor de încă
 
 ### ⚙️ Componenta Hardware (Embedded / IoT)
 *   **Microcontroler:**  ESP8266 Arduino
-*   **Senzori și Actuatori:** 
+*   **Senzori : Senzor de curent
 *   **Comunicare:** Transmiterea datelor de telemetrie către server 
 
 ### 💻 Componenta Software (Web Dashboard)
